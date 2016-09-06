@@ -5,15 +5,13 @@
 <html>
     <head>
         <title>Fruitsを登録します</title>
-        <meta>
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <meta charset="UTF-8">
         <style>
             <%@ include file="css/custom.css" %>
         </style>
     </head>
     <body>
-        <h2><c:out value="Fruitsを登録"></c:out></h2>
+        <h2>Fruitsを登録</h2>
         <form action="./fruitsServlet" method="POST">
             <table>
                 <tr>
