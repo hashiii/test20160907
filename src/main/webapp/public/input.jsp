@@ -11,7 +11,7 @@
         </style>
     </head>
     <body>
-        <h2>Fruitsを登録してね</h2>
+        <h2>Fruitsを登録</h2>
         <form action="./fruitsServlet" method="POST">
             <table>
                 <tr>
