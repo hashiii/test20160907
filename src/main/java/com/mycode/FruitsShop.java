@@ -15,6 +15,11 @@ public class FruitsShop {
     public static FruitsShop getShop() {
         return shop;
     }
+    
+    public void removeFruits() {
+        fruitsList.remove(0);
+    }
+
 
     public List<Fruits> getFruitsList() {
         return fruitsList;
