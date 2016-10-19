@@ -19,8 +19,9 @@ public class FruitsServlet extends HttpServlet {
         price = Integer.parseInt(request.getParameter("price"));
         Fruits fruits = new Fruits(name, price);
         FruitsShop shop = FruitsShop.getShop();
+        //shop.removeFruits();
         shop.addFruits(fruits);
-        response.getWriter().println("<h2>Fruitsを登録しました！</h2>");
+        response.getWriter().println("<h2>Fruitsを登録しました！sss</h2>");
         response.getWriter().println(shop.getMessage(fruits));
         response.getWriter().println("<p><a href='input.jsp'>また登録する</a> | <a href='shop.jsp?" + new Date().getTime() + "'>お店へ行く</a></p>");
     }
