@@ -3,9 +3,13 @@
 
 
 <%
-//int shop = Article.get();
-int shop = 10;
-String str = "aaa";
+int shop;
+//int shop = Article.getTotalArticlesNumber();
+//Article artest = new Article();
+List<String> values = new ArrayList<String>();
+
+int shop = 111;
+int shop = artest.intest();
 %>
 <h1>My Notebook<h1>
 
@@ -13,7 +17,5 @@ String str = "aaa";
 
 
 <p>
-the total number of artiles :
 <%= shop  %>
-!
 </p>

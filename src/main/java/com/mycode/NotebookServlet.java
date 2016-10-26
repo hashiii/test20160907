@@ -1,9 +1,10 @@
+package com.mycode;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycode;
+
 
 import java.io.IOException;
 import java.util.Date;
@@ -16,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ryo
  */
-class NotebookServlet extends HttpServlet  {
-
+public class NotebookServlet extends HttpServlet  {
+    //private static final NotebookServlet notebook = new NotebookServlet();
+    
+    public static int get() {
+        return 100;
+    }
 }
