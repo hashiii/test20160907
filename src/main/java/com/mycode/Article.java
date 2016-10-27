@@ -7,7 +7,7 @@ public class Article {
     
     //private static final Article art = new Article();
     //connect to datas
-    Article(){
+    public Article(){
       datas = new ConnectDatas();
     }
     

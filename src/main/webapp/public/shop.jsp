@@ -15,6 +15,7 @@
     <body>
         <h2>Fruitsのお店</h2>
         <%
+            Fruits flt = new Fruits("aaa",111);
             FruitsShop shop = FruitsShop.getShop();
             List<Fruits> fruitsList = shop.getFruitsList();
         %>

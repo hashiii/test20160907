@@ -3,12 +3,12 @@
 
 
 <%
-int shop;
-//int shop = Article.getTotalArticlesNumber();
-//Article artest = new Article();
-List<String> values = new ArrayList<String>();
 
-int shop = 111;
+//int shop = Article.getTotalArticlesNumber();
+Article artest = new Article();
+//List<String> values = new ArrayList<String>();
+
+
 int shop = artest.intest();
 %>
 <h1>My Notebook<h1>
