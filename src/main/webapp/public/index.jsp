@@ -9,13 +9,15 @@ Article artest = new Article();
 //List<String> values = new ArrayList<String>();
 
 
-int shop = artest.intest();
+int numberOfAllArticleCount = artest.intest();
 %>
 <h1>My Notebook<h1>
 
 <section>Latest post<section>
 
-
 <p>
-<%= shop  %>
+    Now ,
+<%= numberOfAllArticleCount  %> article exists!
 </p>
+
+<a href = "post.jsp">post article</a>

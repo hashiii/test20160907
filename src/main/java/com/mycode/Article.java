@@ -12,7 +12,7 @@ public class Article {
     }
     
     public int intest(){
-        return 987;
+        return 0;
     }
     
     public int getTotalArticlesNumber(){

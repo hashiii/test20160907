@@ -18,7 +18,7 @@ public class App {
         ctx.setResourceBase("src/main/webapp/public");//ここでindexとかを決めるみたい？
 //        ctx.setContextPath("/shop");
         ServletHandler handler = new ServletHandler();
-        //handler.addServletWithMapping(FruitsServlet.class, "/fruitsServlet");
+        handler.addServletWithMapping(FruitsServlet.class, "/fruitsServlet");
         handler.addServletWithMapping(NotebookServlet.class,"/notebookServlet");
         ctx.setServletHandler(handler);
 
