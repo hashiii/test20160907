@@ -20,7 +20,7 @@
         </head>
         <body>
             <h1><h:outputText value="Hello World!"/></h1>
-            <form action="index.jsp">
+            <form action="notebookServlet" method="post">
                 <div>title</div>
                 <input type ="textbox">
                 <div>text</div>
