@@ -32,6 +32,8 @@ public class NotebookServlet extends HttpServlet  {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String acceptTitle = request.getParameter("title");//受け取れました
+        String acceptText = request.getParameter("text");//受け取れました
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -40,7 +42,9 @@ public class NotebookServlet extends HttpServlet  {
             out.println("<title>Servlet NewServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Posting complete !</h1>");
+            out.println("<p>aaaa " + acceptTitle+ "</p>");
+            out.println("<p>yyyyy" + acceptText + "</p>");
             out.println("<a href ='index.jsp'>aaa</a>");
             out.println("</body>");
             out.println("</html>");
@@ -76,7 +80,7 @@ public class NotebookServlet extends HttpServlet  {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        out.print("post");
+
         processRequest(request, response);
     }
 

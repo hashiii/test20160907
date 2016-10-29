@@ -22,9 +22,9 @@
             <h1><h:outputText value="Hello World!"/></h1>
             <form action="notebookServlet" method="post">
                 <div>title</div>
-                <input type ="textbox">
+                <input type ="textbox" name="title">
                 <div>text</div>
-                <textarea></textarea>
+                <textarea name="text"></textarea>
                 <input type="submit" value="post!">
             </form>
         </body>
