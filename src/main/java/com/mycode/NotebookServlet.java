@@ -8,7 +8,10 @@ package com.mycode;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +84,13 @@ public class NotebookServlet extends HttpServlet  {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         FileController fc = new FileController(request);
+        try {//dbaccess
+            AccessToDatabase atc = new AccessToDatabase();
+        } catch (SQLException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         processRequest(request, response);
     }
