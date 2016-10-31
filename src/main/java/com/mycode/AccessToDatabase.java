@@ -16,16 +16,28 @@ import java.sql.SQLException;
  * @author ryo
  */
 public class AccessToDatabase {
-     String url =  "jdbc:postgresql://localhost/sammy";
+     String url =  "jdbc:postgresql://localhost/postgres";
      String user = "postgres";
      String password = "postgres";
-     Connection con;
+     
 
     public AccessToDatabase() throws SQLException, ClassNotFoundException {
         // ドライバクラスをロード 
         Class.forName("org.postgresql.Driver"); // PostgreSQLの場合 
-        this.con = DriverManager.getConnection(url, user, password);
+        Connection con = DriverManager.getConnection(url, user, password);
         System.out.print("conection ok");
+        java.sql.Statement stmt = con.createStatement();//なぜこの書き方？
+        String sql = "select * FROM playground;";
         // テーブル照会実行
+        ResultSet executeQuery = stmt.executeQuery(sql);
+        while(executeQuery.next()){
+            //int code = executeQuery.getInt("code");
+            String company = executeQuery.getString("color");
+            System.out.println("コード 会社名:" + company);
+        }
+        stmt.close();
+        executeQuery.close();
+        
+        
     }
 }
