@@ -47,12 +47,12 @@ public class AccessToDatabase {
         ResultSet executeQuery;
         try (java.sql.Statement stmt = con.createStatement() //なぜこの書き方？
         ) {
-            String sql = "select * FROM playground;";
+            String sql = "select * FROM notebook_posts;";
             // テーブル照会実行
             executeQuery = stmt.executeQuery(sql);
             while (executeQuery.next()) {
                 //int code = executeQuery.getInt("code");
-                String company = executeQuery.getString("color");
+                String company = executeQuery.getString("post_title");
                 System.out.println("コード 会社名:" + company);
                 numberOfRow ++;
                 System.out.println(new Integer(numberOfRow).toString());
