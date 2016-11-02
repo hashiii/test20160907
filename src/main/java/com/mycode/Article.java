@@ -1,5 +1,6 @@
 package com.mycode;
 
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,7 +15,7 @@ public class Article {
       datas = new ConnectDatas();
     }
     
-    public int intest() throws SQLException, ClassNotFoundException{
+    public int intest() throws SQLException, ClassNotFoundException, URISyntaxException{
         //return 0;
         AccessToDatabase atc = new AccessToDatabase();
 //        ResultSet dataFromDatabase = atc.getDataFromDatabase();

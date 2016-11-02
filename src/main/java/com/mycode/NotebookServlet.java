@@ -8,6 +8,7 @@ package com.mycode;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -89,6 +90,8 @@ public class NotebookServlet extends HttpServlet  {
         } catch (SQLException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
