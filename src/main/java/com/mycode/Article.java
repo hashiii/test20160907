@@ -3,33 +3,42 @@ package com.mycode;
 import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import static jdk.nashorn.internal.objects.NativeArray.map;
 
 public class Article {
+
     public int totalArticlesNumber = 1234;
     ConnectDatas datas;
-    
-    
+
     //private static final Article art = new Article();
     //connect to datas
-    public Article(){
-      datas = new ConnectDatas();
+    public Article() {
+        datas = new ConnectDatas();
     }
-    
-    public int intest() throws SQLException, ClassNotFoundException, URISyntaxException{
-        //return 0;
+
+    public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException {
         AccessToDatabase atc = new AccessToDatabase();
-//        ResultSet dataFromDatabase = atc.getDataFromDatabase();
-//        System.out.println("1111111111");
-//        //件数を取得する処理
-//        dataFromDatabase.last();
-//        int numberOfRow = dataFromDatabase.getRow();
-//        System.out.println("4444444444");
         return atc.getDataFromDatabase();
     }
-    
-    public int getTotalArticlesNumber(){
+
+    public int getTotalArticlesNumber() {
         int numtest = totalArticlesNumber;
         return numtest;
-        //return 777;//temporaty
+    }
+
+    public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException {
+        AccessToDatabase atc = new AccessToDatabase();
+        Map testmap = atc.getContents();
+//        Iterator<Map.Entry<Integer, String>> entries = testmap.entrySet().iterator();
+//        while (entries.hasNext()) {
+//        Map.Entry<Integer, String> entry = entries.next();
+//        System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+//        }
+        return testmap;
+        //return atc.getContents();
     }
 }
