@@ -13,6 +13,7 @@ public class Article {
 
     public int totalArticlesNumber = 1234;
     ConnectDatas datas;
+    LinkedHashMap maptest ;
 
     //private static final Article art = new Article();
     //connect to datas
@@ -33,6 +34,16 @@ public class Article {
     public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException {
         AccessToDatabase atc = new AccessToDatabase();
         Map testmap = atc.getContents();
+        
+        //ここでしすｓテムだそう。
+        for (Iterator it = testmap.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
+            LinkedHashMap test = entry.getValue();//ここでvaleが持つmapがキテルはあず
+//            System.out.println(entry.getKey());
+//            System.out.println(test);
+            
+            //maptest = testmap.value();
+        }
 //        Iterator<Map.Entry<Integer, String>> entries = testmap.entrySet().iterator();
 //        while (entries.hasNext()) {
 //        Map.Entry<Integer, String> entry = entries.next();

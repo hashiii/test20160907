@@ -28,21 +28,25 @@ Map contents = artest.getArticleContents();
     <div>
        <% 
         //Collection collection = contents.values();
-        Iterator<Map.Entry<Integer, String>> entries = contents.entrySet().iterator();
-        while (entries.hasNext()) {
-        Map.Entry<Integer, String> entry = entries.next();
+        //Iterator<Map.Entry<Integer, String>> entries = contents.entrySet().iterator();
+//        while (entries.hasNext()) {
+//        Map.Entry<Integer, String> entry = entries.next();
+        for (Iterator it = contents.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
+            LinkedHashMap article = entry.getValue();
         %>
         <h2>
-            <%= entry.getValue() %>
+            <%= article.get("title")  %> 
         </h2>
         <div>
-            *there will be contain text contents.
+            <%= article.get("content")  %> 
         </div>
         <div>
-            *there will be contain date contents. example, 2016-11-03-12.12.12.12.
+            <%= article.get("timestamp")  %> 
         </div>
         <%
-        System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            //System.out.println(test.get("title"));
+        //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
         }
        %>
         
