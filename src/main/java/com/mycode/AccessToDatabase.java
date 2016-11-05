@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,17 +41,19 @@ public class AccessToDatabase {
     String aritleContent;
     String timestamp;
     LinkedHashMap<Integer, LinkedHashMap<String, String>> outerMap = new LinkedHashMap<Integer, LinkedHashMap<String, String>>();
-    LinkedHashMap<String, String> innerMap ;
+    LinkedHashMap<String, String> innerMap;
+    Connection con;
+    ResultSet executeQuery;
 
     public AccessToDatabase() throws SQLException, ClassNotFoundException, URISyntaxException {
         // ドライバクラスをロード 
         Class.forName("org.postgresql.Driver"); // PostgreSQLの場合 
         //Connection con = DriverManager.getConnection(url, user, password);//localの場合
-        Connection con = DriverManager.getConnection(odateturo);
+        con = DriverManager.getConnection(odateturo);
         hashdata = new LinkedHashMap();
 
         System.out.print("conection ok");
-        ResultSet executeQuery;
+
         try (java.sql.Statement stmt = con.createStatement() //なぜこの書き方？
                 ) {
             String sql = "select * FROM notebook_posts;";
@@ -68,6 +73,34 @@ public class AccessToDatabase {
             }
         }
         executeQuery.close();
+
+    }
+
+    public void postDataToDatabase(String title, String content) throws SQLException {
+        //とりあえず引数なしで行ってみる
+        // 1) create a java calendar instance
+        Calendar calendar = Calendar.getInstance();
+        // 2) get a java.util.Date from the calendar instance.
+        //    this date will represent the current instant, or "now".
+        java.util.Date now = calendar.getTime();
+        // 3) a java current time (now) instance
+        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+        //chage to String 
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTimestamp);
+        System.out.println(timestamp);
+        //timestamp = "2016-11-06 00:00:00";
+
+        //String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values (" + title + "," + content + "," + timestamp + ");";
+        String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('"+title+"','"+content+"','"+timestamp+"');";
+        
+        // テーブル照会実行
+        java.sql.Statement stmt = con.createStatement();
+        //stmt.executeQuery(sql);
+        java.sql.Statement resultStmt;
+        //executeQuery.close();
+        resultStmt = con.createStatement();
+        ResultSet rs;
+        resultStmt.execute(sql);//not 必要なし//run
 
     }
 

@@ -85,8 +85,19 @@ public class NotebookServlet extends HttpServlet  {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         FileController fc = new FileController(request);
+        try {
+            //String acceptTitle = request.getParameter("title");//受け取れました
+            AccessToDatabase atd = new AccessToDatabase ();
+        } catch (SQLException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {//dbaccess
             AccessToDatabase atc = new AccessToDatabase();
+            atc.postDataToDatabase(request.getParameter("title"),request.getParameter("text"));
         } catch (SQLException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
