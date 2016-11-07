@@ -2,7 +2,7 @@
 <%@ page import="com.mycode.Article" %>
 <%@ page import="java.util.*" %>
 <%@ page import="static jdk.nashorn.internal.objects.NativeArray.map" %>
-
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <%
 
@@ -17,7 +17,7 @@ Map contents = artest.getArticleContents();
 %>
 <h1>My Notebook<h1>
 
-<section>Latest post_<section>
+<section>Latest post_日本<section>
 
 <p>
     Now ,
