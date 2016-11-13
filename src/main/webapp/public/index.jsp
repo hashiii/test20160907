@@ -15,9 +15,16 @@ Article artest = new Article();
 int numberOfAllArticleCount = artest.getNumberOfAllAricleCounts();
 Map contents = artest.getArticleContents();
 %>
+<!DOCTYPE html>
+
+<header>
+    <script type='text/javascript' src='<%= org.webjars.AssetLocator.getWebJarPath("jquery.min.js") %>'></script>    
+</header>
+<body>
 <h1>My Notebook<h1>
 
 <section>Latest post_日本<section>
+
 
 <p>
     Now ,
@@ -54,3 +61,7 @@ Map contents = artest.getArticleContents();
 </section>
 
 <a href = "post.jsp">post article</a>
+
+</body>
+
+</html>
