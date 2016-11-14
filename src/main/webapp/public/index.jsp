@@ -18,50 +18,56 @@ Map contents = artest.getArticleContents();
 <!DOCTYPE html>
 
 <header>
-    <script type='text/javascript' src='<%= org.webjars.AssetLocator.getWebJarPath("jquery.min.js") %>'></script>    
+    <script type='text/javascript' src='<%= org.webjars.AssetLocator.getWebJarPath("jquery.js") %>'></script>    
+    <script>
+        $(function () {
+            $("#test").html("Hello World!");
+        });
+    </script>
 </header>
 <body>
-<h1>My Notebook<h1>
+    <h1>My Notebook<h1>
+            <div id="test"></div>
 
-<section>Latest post_日本<section>
+            <section>Latest post_日本<section>
 
 
-<p>
-    Now ,
-<%= numberOfAllArticleCount  %> article exists!
-</p>
+                    <p>
+                        Now ,
+                        <%= numberOfAllArticleCount  %> article exists!
+                    </p>
 
-<section>
-    <div>
-       <% 
-        //Collection collection = contents.values();
-        //Iterator<Map.Entry<Integer, String>> entries = contents.entrySet().iterator();
-//        while (entries.hasNext()) {
-//        Map.Entry<Integer, String> entry = entries.next();
-        for (Iterator it = contents.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
-            LinkedHashMap article = entry.getValue();
-        %>
-        <h2>
-            <%= article.get("title")  %> 
-        </h2>
-        <div>
-            <%= article.get("content")  %> 
-        </div>
-        <div>
-            <%= article.get("timestamp")  %> 
-        </div>
-        <%
-            //System.out.println(test.get("title"));
-        //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-        }
-       %>
-        
-    </div>
-</section>
+                    <section>
+                        <div>
+                            <% 
+                             //Collection collection = contents.values();
+                             //Iterator<Map.Entry<Integer, String>> entries = contents.entrySet().iterator();
+                     //        while (entries.hasNext()) {
+                     //        Map.Entry<Integer, String> entry = entries.next();
+                             for (Iterator it = contents.entrySet().iterator(); it.hasNext();) {
+                                 Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
+                                 LinkedHashMap article = entry.getValue();
+                            %>
+                            <h2>
+                                <%= article.get("title")  %> 
+                            </h2>
+                            <div>
+                                <%= article.get("content")  %> 
+                            </div>
+                            <div>
+                                <%= article.get("timestamp")  %> 
+                            </div>
+                            <%
+                                //System.out.println(test.get("title"));
+                            //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                            }
+                            %>
 
-<a href = "post.jsp">post article</a>
+                        </div>
+                    </section>
 
-</body>
+                    <a href = "post.jsp">post article</a>
 
-</html>
+                    </body>
+
+                    </html>
