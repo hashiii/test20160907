@@ -54,9 +54,8 @@ public class AccessToDatabase {
 
         System.out.print("conection ok");
 
-        try (java.sql.Statement stmt = con.createStatement() //なぜこの書き方？
-                ) {
-            String sql = "select * FROM notebook_posts;";
+        try (java.sql.Statement stmt = con.createStatement()) {
+            String sql = "select * FROM notebook_posts ORDER BY post_timestamp DESC;";
             // テーブル照会実行
             executeQuery = stmt.executeQuery(sql);
             while (executeQuery.next()) {
@@ -91,8 +90,8 @@ public class AccessToDatabase {
         //timestamp = "2016-11-06 00:00:00";
 
         //String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values (" + title + "," + content + "," + timestamp + ");";
-        String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('"+title+"','"+content+"','"+timestamp+"');";
-        
+        String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('" + title + "','" + content + "','" + timestamp + "');";
+
         // テーブル照会実行
         java.sql.Statement stmt = con.createStatement();
         //stmt.executeQuery(sql);
@@ -112,18 +111,4 @@ public class AccessToDatabase {
         //return hashdata;
         return outerMap;
     }
-    //この書き方だめっぽい。
-//        public ResultSet getDataFromDatabase() throws SQLException, ClassNotFoundException{
-//        Class.forName("org.postgresql.Driver"); // PostgreSQLの場合 
-//        Connection con = DriverManager.getConnection(url, user, password);
-//        System.out.print("conection ok");
-//        ResultSet executeQuery;
-//         try (java.sql.Statement stmt = con.createStatement() //なぜこの書き方？
-//         ) {
-//             String sql = "select * FROM playground;";
-//             // テーブル照会実行
-//             executeQuery = stmt.executeQuery(sql);
-//         }
-//        return executeQuery;
-//    }
 }
