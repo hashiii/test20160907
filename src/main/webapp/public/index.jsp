@@ -5,69 +5,82 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%
-
-//int shop = Article.getTotalArticlesNumber();
 Article artest = new Article();
-//List<String> values = new ArrayList<String>();
-//Map<K, V> map = new LinkedHashMap<K, V>();
-
-
 int numberOfAllArticleCount = artest.getNumberOfAllAricleCounts();
 Map contents = artest.getArticleContents();
 %>
+
+
 <!DOCTYPE html>
 
 <header>
     <script type='text/javascript' src='<%= org.webjars.AssetLocator.getWebJarPath("jquery.js") %>'></script>    
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script>
-
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Notebook !</title>
+    <style type="text/css">
+        .aricle_contents{
+            -moz-box-shadow: 0 0 2px black;
+            -webkit-box-shadow: 0 0 2px black;
+            box-shadow: 0 0 2px black;
+            padding: 10px;
+        }
+        .header_title{
+            background-color: #174364;
+            padding: 20px;
+            color:	#D5AD6D; /*if no support for background-clip*/
+        }
+    </style>
 </header>
 <body>
-    <h1>My Notebook<h1>
-
-
-            <section>Latest post_日本<section>
-
-
+    <header class="jumbotron header_title">
+        <div class="container-fluid">
+            <h1>My Notebook</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <section>
                     <p>
                         Now ,
                         <%= numberOfAllArticleCount  %> article exists!
                     </p>
+                    <div><a href = "post.jsp">Post article</a></div>
+                    <h1>Articles List</h1>
 
                     <section>
-                        <div>
-                            <% 
-                             //Collection collection = contents.values();
-                             //Iterator<Map.Entry<Integer, String>> entries = contents.entrySet().iterator();
-                     //        while (entries.hasNext()) {
-                     //        Map.Entry<Integer, String> entry = entries.next();
-                             for (Iterator it = contents.entrySet().iterator(); it.hasNext();) {
-                                 Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
-                                 LinkedHashMap article = entry.getValue();
-                            %>
-                            <h2>
-                                <%= article.get("title")  %> 
-                            </h2>
-                            <div>
+                        <% 
+                         for (Iterator it = contents.entrySet().iterator(); it.hasNext();) {
+                             Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
+                             LinkedHashMap article = entry.getValue();
+                        %>
+                        <h1>
+                            <%= article.get("title")  %> 
+                        </h1>
+                        <div class="aricle_contents">
+                            <p>
                                 <%= article.get("content")  %> 
-                            </div>
-                            <div>
-                                <%= article.get("timestamp")  %> 
-                            </div>
-                            <%
-                                //System.out.println(test.get("title"));
-                            //System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-                            }
-                            %>
-
+                            </p>
                         </div>
+                        <div>
+                            <small><%= article.get("timestamp")  %> </small>
+                        </div>
+                        <%
+                        }
+                        %>
+
                     </section>
+                </section>
 
-                    <a href = "post.jsp">post article</a>
+            </div>
+            <div class="col-md-4">
+                <h2>category</h2>
+            </div>
+        </div>
 
-                    </body>
+    </div>
+</body>
 
-                    </html>
+</html>
