@@ -40,6 +40,7 @@ public class AccessToDatabase {
     String aritleTitle;
     String aritleContent;
     String timestamp;
+    String key;
     LinkedHashMap<Integer, LinkedHashMap<String, String>> outerMap = new LinkedHashMap<Integer, LinkedHashMap<String, String>>();
     LinkedHashMap<String, String> innerMap;
     Connection con;
@@ -64,10 +65,12 @@ public class AccessToDatabase {
                 aritleTitle = executeQuery.getString("post_title");
                 aritleContent = executeQuery.getString("post_content");
                 timestamp = executeQuery.getString("post_timestamp");
+                key = executeQuery.getString("key");
                 hashdata.put(numberOfRow, aritleTitle);
                 innerMap.put("title", aritleTitle);
                 innerMap.put("content", aritleContent);
                 innerMap.put("timestamp", timestamp);
+                innerMap.put("key", key);
                 outerMap.put(numberOfRow, innerMap);
             }
         }
@@ -86,10 +89,7 @@ public class AccessToDatabase {
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
         //chage to String 
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTimestamp);
-        System.out.println(timestamp);
-        //timestamp = "2016-11-06 00:00:00";
 
-        //String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values (" + title + "," + content + "," + timestamp + ");";
         String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('" + title + "','" + content + "','" + timestamp + "');";
 
         // テーブル照会実行
@@ -99,7 +99,15 @@ public class AccessToDatabase {
         //executeQuery.close();
         resultStmt = con.createStatement();
         ResultSet rs;
-        resultStmt.execute(sql);//not 必要なし//run
+        resultStmt.execute(sql);
+
+    }
+
+    public void deleteDatatoDatabase(String keynumber) throws SQLException {
+        String sql = "delete from notebook_posts where key = " + keynumber;
+        java.sql.Statement resultStmt;
+        resultStmt = con.createStatement();
+        resultStmt.execute(sql);
 
     }
 

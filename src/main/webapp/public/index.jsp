@@ -39,7 +39,40 @@ Map contents = artest.getArticleContents();
             <h1>My Notebook</h1>
         </div>
     </header>
+    <a href="#route1">Route1 </a>
+    <a href="#route2">Route2 </a>
+    <a href="#route3">Route3 </a>
     <div class="container">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+        <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+        <!-- =============== -->
+        <!-- Javascript code -->
+        <!-- =============== -->
+        <script type="text/javascript">
+            var AppView = Backbone.View.extend({
+                // el - stands for element. Every view has an element associated with HTML content, will be rendered.
+                el: '#test_container',
+                // It's the first function called when this view is instantiated.
+                initialize: function () {
+                    this.render();
+                },
+                // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
+                render: function () {
+                    //this.alert("Hello TutorialsPoint!!!");
+                }
+            });
+
+            var appView = new AppView();
+
+            function delete_this_article(keynum) {
+                if (confirm('ページ遷移しますか？')) {
+                    var pram = "keyNum=" + keynum;
+                    window.location.href = 'notebookServlet?' + pram;
+                }
+            }
+
+        </script>
         <div class="row">
             <div class="col-md-8">
                 <section>
@@ -55,17 +88,21 @@ Map contents = artest.getArticleContents();
                          for (Iterator it = contents.entrySet().iterator(); it.hasNext();) {
                              Map.Entry<Integer, LinkedHashMap> entry = (Map.Entry<Integer, LinkedHashMap>) it.next();
                              LinkedHashMap article = entry.getValue();
+                             
                         %>
-                        <h1>
-                            <%= article.get("title")  %> 
-                        </h1>
-                        <div class="aricle_contents">
-                            <p>
-                                <%= article.get("content")  %> 
-                            </p>
-                        </div>
-                        <div>
-                            <small><%= article.get("timestamp")  %> </small>
+                        <div id="aricle_contents">
+                            <h1>
+                                <%= article.get("title")  %> 
+                            </h1>
+                            <div class="aricle_contents">
+                                <p>
+                                    <%= article.get("content")  %> 
+                                </p>
+                            </div>
+                            <div>
+                                <small><%= article.get("timestamp")  %> </small>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="delete_this_article(<%= article.get("key")%>);">Delete</button>
                         </div>
                         <%
                         }

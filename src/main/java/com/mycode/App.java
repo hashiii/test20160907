@@ -18,7 +18,6 @@ public class App {
 
         WebAppContext ctx = new WebAppContext();
 
-        //ctx.setResourceBase("src/main/webapp/public");//ここでindexとかを決めるみたい？
         ResourceCollection resources = new ResourceCollection(new String[]{
             "src/main/webapp/public",
             App.class.getClassLoader().getResource("META-INF/resources/").toURI().toString()

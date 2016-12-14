@@ -13,7 +13,7 @@ public class Article {
 
     public int totalArticlesNumber = 1234;
     ConnectDatas datas;
-    LinkedHashMap maptest ;
+    LinkedHashMap maptest;
 
     //connect to datas
     public Article() {
@@ -23,12 +23,17 @@ public class Article {
     public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException {
         AccessToDatabase atc = new AccessToDatabase();
         return atc.getDataFromDatabase();
-    }    
+    }
 
     public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException {
-        
+
         AccessToDatabase atc = new AccessToDatabase();
         Map eachArticleDatas = atc.getContents();
         return eachArticleDatas;
+    }
+
+    public void delete(String keynumber) throws SQLException, ClassNotFoundException, URISyntaxException {
+        AccessToDatabase db = new AccessToDatabase();
+        db.deleteDatatoDatabase(keynumber);
     }
 }
