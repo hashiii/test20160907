@@ -56,7 +56,7 @@ public class AccessToDatabase {
         System.out.print("conection ok");
 
         try (java.sql.Statement stmt = con.createStatement()) {
-            String sql = "select * FROM notebook_posts ORDER BY post_timestamp DESC;";
+            String sql = "select * FROM notebook_posts where status = 'active' ORDER BY post_timestamp DESC ;";
             // テーブル照会実行
             executeQuery = stmt.executeQuery(sql);
             while (executeQuery.next()) {
@@ -104,7 +104,8 @@ public class AccessToDatabase {
     }
 
     public void deleteDatatoDatabase(String keynumber) throws SQLException {
-        String sql = "delete from notebook_posts where key = " + keynumber;
+        //String sql = "delete from notebook_posts where key = " + keynumber;
+        String sql = "update notebook_posts set status = 'invalid' where key = " + keynumber;
         java.sql.Statement resultStmt;
         resultStmt = con.createStatement();
         resultStmt.execute(sql);
