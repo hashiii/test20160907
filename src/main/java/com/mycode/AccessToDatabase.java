@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  *
@@ -79,16 +80,18 @@ public class AccessToDatabase {
     }
 
     public void postDataToDatabase(String title, String content) throws SQLException {
-        //とりあえず引数なしで行ってみる
         // 1) create a java calendar instance
         Calendar calendar = Calendar.getInstance();
+        TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
         // 2) get a java.util.Date from the calendar instance.
         //    this date will represent the current instant, or "now".
         java.util.Date now = calendar.getTime();
         // 3) a java current time (now) instance
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-        //chage to String 
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTimestamp);
+        //chage to String
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        simpleDateFormat.setTimeZone(tz);
+        String timestamp = simpleDateFormat.format(currentTimestamp);
 
         String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('" + title + "','" + content + "','" + timestamp + "');";
 
