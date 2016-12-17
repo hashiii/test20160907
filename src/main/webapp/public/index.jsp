@@ -67,9 +67,12 @@ Map contents = artest.getArticleContents();
 
             function delete_this_article(keynum) {
                 if (confirm('ページ遷移しますか？')) {
-                    var pram = "keyNum=" + keynum;
+                    var pram = "keyNum=" + keynum;//set get paramater
                     window.location.href = 'notebookServlet?' + pram;
                 }
+            }
+            function change_page(){
+                window.location.href = 'post.jsp';
             }
 
         </script>
@@ -80,7 +83,7 @@ Map contents = artest.getArticleContents();
                         Now ,
                         <%= numberOfAllArticleCount  %> article exists!
                     </p>
-                    <div><a href = "post.jsp">Post article</a></div>
+                    <button type="button" class="btn btn-danger" onclick="change_page();">Post article</button>
                     <h1>Articles List</h1>
 
                     <section>
