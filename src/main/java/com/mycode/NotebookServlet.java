@@ -14,9 +14,15 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+@WebServlet("/UploadServlet")
+@MultipartConfig(location = "/", maxFileSize = 1048576)
 
 /**
  *
@@ -33,6 +39,7 @@ public class NotebookServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -96,8 +103,14 @@ public class NotebookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        FileController fc = new FileController(request);
+
+        Part part = request.getPart("image");//image update
+        String name = this.getFileName(part);
+        if (!name.isEmpty()) {
+            String realPath = getServletContext().getRealPath("") + "/" + name;
+            part.write(realPath);
+        }
+
         try {
             AccessToDatabase atd = new AccessToDatabase();
         } catch (SQLException ex) {
@@ -109,6 +122,7 @@ public class NotebookServlet extends HttpServlet {
         }
         try {//dbaccess
             AccessToDatabase atc = new AccessToDatabase();
+
             atc.postDataToDatabase(request.getParameter("title"), request.getParameter("text"));
         } catch (SQLException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,4 +145,15 @@ public class NotebookServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private String getFileName(Part part) {
+        String name = null;
+        for (String dispotion : part.getHeader("Content-Disposition").split(";")) {
+            if (dispotion.trim().startsWith("filename")) {
+                name = dispotion.substring(dispotion.indexOf("=") + 1).replace("\"", "").trim();
+                name = name.substring(name.lastIndexOf("\\") + 1);
+                break;
+            }
+        }
+        return name;
+    }
 }

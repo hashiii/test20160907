@@ -20,11 +20,14 @@
         </head>
         <body>
             <h1><h:outputText value="Hello World!"/></h1>
-            <form action="notebookServlet" method="post">
+            <form action="notebookServlet" method="post" enctype="multipart/form-data">
                 <div>title</div>
                 <input type ="textbox" name="title">
                 <div>text</div>
                 <textarea name="text"></textarea>
+                <div>
+                <input type="file"  name="image" accept='image/*'>
+                </div>
                 <input type="submit" value="post!">
             </form>
         </body>

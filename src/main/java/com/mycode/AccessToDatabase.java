@@ -6,10 +6,15 @@
 package com.mycode;
 
 import java.beans.Statement;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -54,8 +59,6 @@ public class AccessToDatabase {
         con = DriverManager.getConnection(odateturo);
         hashdata = new LinkedHashMap();
 
-        System.out.print("conection ok");
-
         try (java.sql.Statement stmt = con.createStatement()) {
             String sql = "select * FROM notebook_posts where status = 'active' ORDER BY post_timestamp DESC ;";
             // テーブル照会実行
@@ -79,7 +82,7 @@ public class AccessToDatabase {
 
     }
 
-    public void postDataToDatabase(String title, String content) throws SQLException {
+    public void postDataToDatabase(String title, String content) throws SQLException, FileNotFoundException, IOException {
         // 1) create a java calendar instance
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
@@ -92,6 +95,7 @@ public class AccessToDatabase {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         simpleDateFormat.setTimeZone(tz);
         String timestamp = simpleDateFormat.format(currentTimestamp);
+      
 
         String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('" + title + "','" + content + "','" + timestamp + "');";
 
@@ -120,7 +124,6 @@ public class AccessToDatabase {
     }
 
     public LinkedHashMap getContents() {
-        //return hashdata;
         return outerMap;
     }
 }

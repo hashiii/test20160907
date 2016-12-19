@@ -103,6 +103,9 @@ Map contents = artest.getArticleContents();
                                 </p>
                             </div>
                             <div>
+                                <img style="width: 100px; height: 100px" src="http://localhost:8080/tttttt.jpg">
+                            </div>
+                            <div>
                                 <small><%= article.get("timestamp")  %> </small>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="delete_this_article(<%= article.get("key")%>);">Delete</button>
