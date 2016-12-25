@@ -5,8 +5,9 @@ package com.mycode;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import com.google.common.io.ByteStreams;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -39,7 +40,6 @@ public class NotebookServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -103,13 +103,22 @@ public class NotebookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Part part = request.getPart("image");//image update
-        String name = this.getFileName(part);
-        if (!name.isEmpty()) {
-            String realPath = getServletContext().getRealPath("") + "/" + name;
-            part.write(realPath);
-        }
+        //byte[] bytes = null;
+        // obtains the upload file part in this multipart request
+        //Part part = request.getPart("image");//image update
+        // obtains input stream of the upload file
+        //InputStream inputStream = part.getInputStream();
+        //String sql = "INSERT INTO contacts (first_name, last_name, photo) values (?, ?, ?)";
+//        if(inputStream != null){
+//            inputStream.setBlob(3, inputStream);
+//        }
+//        String name = this.getFileName(part);
+//
+//        if (!name.isEmpty()) {
+//            bytes = ByteStreams.toByteArray(inputStream);
+//            String realPath = getServletContext().getRealPath("") + "/" + name;
+//            part.write(realPath);
+//        }
 
         try {
             AccessToDatabase atd = new AccessToDatabase();
@@ -123,7 +132,7 @@ public class NotebookServlet extends HttpServlet {
         try {//dbaccess
             AccessToDatabase atc = new AccessToDatabase();
 
-            atc.postDataToDatabase(request.getParameter("title"), request.getParameter("text"));
+            atc.postDataToDatabase(request);
         } catch (SQLException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

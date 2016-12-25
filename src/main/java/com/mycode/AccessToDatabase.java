@@ -5,13 +5,19 @@
  */
 package com.mycode;
 
+import static com.google.common.base.CharMatcher.is;
+import com.google.common.io.Files;
 import java.beans.Statement;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,6 +31,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import sun.misc.IOUtils;
 
 /**
  *
@@ -82,7 +92,7 @@ public class AccessToDatabase {
 
     }
 
-    public void postDataToDatabase(String title, String content) throws SQLException, FileNotFoundException, IOException {
+    public void postDataToDatabase(HttpServletRequest request) throws SQLException, FileNotFoundException, IOException, ServletException {
         // 1) create a java calendar instance
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
@@ -95,19 +105,30 @@ public class AccessToDatabase {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         simpleDateFormat.setTimeZone(tz);
         String timestamp = simpleDateFormat.format(currentTimestamp);
-      
+        Part part = request.getPart("image");//image update
+        InputStream inputStream = part.getInputStream();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-        String sql = "insert into notebook_posts (post_title,post_content,post_timestamp) values ('" + title + "','" + content + "','" + timestamp + "');";
+        int nRead;
+        byte[] data = new byte[16384];
 
-        // テーブル照会実行
-        java.sql.Statement stmt = con.createStatement();
-        //stmt.executeQuery(sql);
-        java.sql.Statement resultStmt;
-        //executeQuery.close();
-        resultStmt = con.createStatement();
-        ResultSet rs;
-        resultStmt.execute(sql);
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
 
+        buffer.flush();
+
+        byte[] toByteArray = buffer.toByteArray();
+
+        String sql = "insert into notebook_posts (post_title,post_content,post_timestamp,image) values (?,?,?,?);";
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setString(1, request.getParameter("title"));
+            statement.setString(2, request.getParameter("text"));
+            statement.setTimestamp(3, currentTimestamp);
+            statement.setBytes(4, toByteArray);
+
+            int row = statement.executeUpdate();
+        }
     }
 
     public void deleteDatatoDatabase(String keynumber) throws SQLException {
