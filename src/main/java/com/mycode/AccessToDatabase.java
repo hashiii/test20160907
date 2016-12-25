@@ -120,6 +120,7 @@ public class AccessToDatabase {
         // 1) create a java calendar instance
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
+        calendar.setTimeZone(tz);//timezone
         // 2) get a java.util.Date from the calendar instance.
         //    this date will represent the current instant, or "now".
         java.util.Date now = calendar.getTime();
