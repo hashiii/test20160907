@@ -1,5 +1,6 @@
 package com.mycode;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,19 +21,19 @@ public class Article {
         datas = new ConnectDatas();
     }
 
-    public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException {
+    public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
         AccessToDatabase atc = new AccessToDatabase();
         return atc.getDataFromDatabase();
     }
 
-    public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException {
+    public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
 
         AccessToDatabase atc = new AccessToDatabase();
         Map eachArticleDatas = atc.getContents();
         return eachArticleDatas;
     }
 
-    public void delete(String keynumber) throws SQLException, ClassNotFoundException, URISyntaxException {
+    public void delete(String keynumber) throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
         AccessToDatabase db = new AccessToDatabase();
         db.deleteDatatoDatabase(keynumber);
     }

@@ -103,23 +103,6 @@ public class NotebookServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //byte[] bytes = null;
-        // obtains the upload file part in this multipart request
-        //Part part = request.getPart("image");//image update
-        // obtains input stream of the upload file
-        //InputStream inputStream = part.getInputStream();
-        //String sql = "INSERT INTO contacts (first_name, last_name, photo) values (?, ?, ?)";
-//        if(inputStream != null){
-//            inputStream.setBlob(3, inputStream);
-//        }
-//        String name = this.getFileName(part);
-//
-//        if (!name.isEmpty()) {
-//            bytes = ByteStreams.toByteArray(inputStream);
-//            String realPath = getServletContext().getRealPath("") + "/" + name;
-//            part.write(realPath);
-//        }
-
         try {
             AccessToDatabase atd = new AccessToDatabase();
         } catch (SQLException ex) {

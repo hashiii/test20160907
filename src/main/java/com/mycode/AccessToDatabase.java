@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -56,13 +57,15 @@ public class AccessToDatabase {
     String aritleTitle;
     String aritleContent;
     String timestamp;
+    Blob image;
     String key;
     LinkedHashMap<Integer, LinkedHashMap<String, String>> outerMap = new LinkedHashMap<Integer, LinkedHashMap<String, String>>();
     LinkedHashMap<String, String> innerMap;
     Connection con;
     ResultSet executeQuery;
+    String imageBase64;
 
-    public AccessToDatabase() throws SQLException, ClassNotFoundException, URISyntaxException {
+    public AccessToDatabase() throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
         // ドライバクラスをロード 
         Class.forName("org.postgresql.Driver"); // PostgreSQLの場合 
         //Connection con = DriverManager.getConnection(url, user, password);//localの場合
@@ -79,11 +82,32 @@ public class AccessToDatabase {
                 aritleTitle = executeQuery.getString("post_title");
                 aritleContent = executeQuery.getString("post_content");
                 timestamp = executeQuery.getString("post_timestamp");
+                InputStream binaryStream = executeQuery.getBinaryStream("image");
                 key = executeQuery.getString("key");
                 hashdata.put(numberOfRow, aritleTitle);
                 innerMap.put("title", aritleTitle);
                 innerMap.put("content", aritleContent);
                 innerMap.put("timestamp", timestamp);
+
+                InputStream inputStream1 = binaryStream;
+
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+                if (inputStream1 != null) {
+                    int nRead;
+                    byte[] data = new byte[16384];
+                    while ((nRead = inputStream1.read(data, 0, data.length)) != -1) {
+                        buffer.write(data, 0, nRead);
+                    }
+                    buffer.flush();
+                    byte[] toByteArray = buffer.toByteArray();
+
+                    imageBase64 = new String(Base64.getEncoder().encode(toByteArray));
+                } else {
+                    imageBase64 = null;
+                }
+                innerMap.put("image", imageBase64);
+                //
                 innerMap.put("key", key);
                 outerMap.put(numberOfRow, innerMap);
             }
