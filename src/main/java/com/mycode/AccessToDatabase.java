@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -35,6 +36,8 @@ import java.util.TimeZone;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import sun.misc.IOUtils;
 
 /**
@@ -64,8 +67,9 @@ public class AccessToDatabase {
     Connection con;
     ResultSet executeQuery;
     String imageBase64;
+    private String value;
 
-    public AccessToDatabase() throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
+    public AccessToDatabase() throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
         // ドライバクラスをロード 
         Class.forName("org.postgresql.Driver"); // PostgreSQLの場合 
         //Connection con = DriverManager.getConnection(url, user, password);//localの場合
@@ -81,6 +85,18 @@ public class AccessToDatabase {
                 numberOfRow++;
                 aritleTitle = executeQuery.getString("post_title");
                 aritleContent = executeQuery.getString("post_content");
+
+                JspWriter writer = null;
+                // 改行コードを全てLFに変換し、LFでsplit
+                //リプレイスしたら全て\nになるからその条件でsplitする。
+                String[] split = aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n");
+                System.out.println(Arrays.toString(split));
+//                for (String str  : aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n")) {
+//                    // brタグを出力
+//                    System.out.println("koko");
+//                    writer.write("<br />");
+//                }
+
                 timestamp = executeQuery.getString("post_timestamp");
                 InputStream binaryStream = executeQuery.getBinaryStream("image");
                 key = executeQuery.getString("key");
@@ -121,8 +137,10 @@ public class AccessToDatabase {
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
         calendar.setTimeZone(tz);//timezone
+        //int get = calendar.get(numberOfRow);
         // 2) get a java.util.Date from the calendar instance.
         //    this date will represent the current instant, or "now".
+        TimeZone.setDefault(tz);
         java.util.Date now = calendar.getTime();
         // 3) a java current time (now) instance
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
