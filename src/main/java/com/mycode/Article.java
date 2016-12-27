@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.servlet.jsp.JspException;
 import static jdk.nashorn.internal.objects.NativeArray.map;
 
 public class Article {
@@ -21,19 +22,19 @@ public class Article {
         datas = new ConnectDatas();
     }
 
-    public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
+    public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
         AccessToDatabase atc = new AccessToDatabase();
         return atc.getDataFromDatabase();
     }
 
-    public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
+    public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
 
         AccessToDatabase atc = new AccessToDatabase();
         Map eachArticleDatas = atc.getContents();
         return eachArticleDatas;
     }
 
-    public void delete(String keynumber) throws SQLException, ClassNotFoundException, URISyntaxException, IOException {
+    public void delete(String keynumber) throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
         AccessToDatabase db = new AccessToDatabase();
         db.deleteDatatoDatabase(keynumber);
     }

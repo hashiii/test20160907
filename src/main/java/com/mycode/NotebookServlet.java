@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.servlet.jsp.JspException;
 
 @WebServlet("/UploadServlet")
 @MultipartConfig(location = "/", maxFileSize = 1048576)
@@ -87,6 +88,8 @@ public class NotebookServlet extends HttpServlet {
                 Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {
                 Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JspException ex) {
+                Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         processRequest(request, response);
@@ -111,6 +114,8 @@ public class NotebookServlet extends HttpServlet {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (URISyntaxException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JspException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {//dbaccess
             AccessToDatabase atc = new AccessToDatabase();
@@ -121,6 +126,8 @@ public class NotebookServlet extends HttpServlet {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (URISyntaxException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JspException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
