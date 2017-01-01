@@ -90,7 +90,7 @@ public class AccessToDatabase {
                 // 改行コードを全てLFに変換し、LFでsplit
                 //リプレイスしたら全て\nになるからその条件でsplitする。
                 String[] split = aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n");
-                System.out.println(Arrays.toString(split));
+                //System.out.println(Arrays.toString(split));
 //                for (String str  : aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n")) {
 //                    // brタグを出力
 //                    System.out.println("koko");
@@ -119,6 +119,9 @@ public class AccessToDatabase {
                     byte[] toByteArray = buffer.toByteArray();
 
                     imageBase64 = new String(Base64.getEncoder().encode(toByteArray));
+                    if(imageBase64.isEmpty()){//if 0byte then 
+                        imageBase64 = null;
+                    }
                 } else {
                     imageBase64 = null;
                 }
@@ -134,16 +137,16 @@ public class AccessToDatabase {
 
     public void postDataToDatabase(HttpServletRequest request) throws SQLException, FileNotFoundException, IOException, ServletException {
         // 1) create a java calendar instance
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone( "UTC" ));
         TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
-        calendar.setTimeZone(tz);//timezone
+        //calendar.setTimeZone(tz);//timezone
         //int get = calendar.get(numberOfRow);
         // 2) get a java.util.Date from the calendar instance.
         //    this date will represent the current instant, or "now".
-        TimeZone.setDefault(tz);
+        //TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         java.util.Date now = calendar.getTime();
         // 3) a java current time (now) instance
-        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());//finish
         //chage to String
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         simpleDateFormat.setTimeZone(tz);

@@ -103,7 +103,9 @@ Map contents = artest.getArticleContents();
                                 </p>
                             </div>
                             <div>
+                                <% if(article.get("image") != null){  %>
                                 <img src="data:image/jpg;base64, <%= article.get("image")  %>" height="200"/>
+                                <% } %>
                             </div>
                             <div>
                                 <small><%= article.get("timestamp")  %> </small>
