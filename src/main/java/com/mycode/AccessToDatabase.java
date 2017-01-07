@@ -89,20 +89,21 @@ public class AccessToDatabase {
                 JspWriter writer = null;
                 // 改行コードを全てLFに変換し、LFでsplit
                 //リプレイスしたら全て\nになるからその条件でsplitする。
-                String[] split = aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n");
-                //System.out.println(Arrays.toString(split));
-//                for (String str  : aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n")) {
-//                    // brタグを出力
-//                    System.out.println("koko");
-//                    writer.write("<br />");
-//                }
+                
+                //改行処理追加
+                String addedNewLinesAritleContent = "";
+                for (String str  : aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n")) {
+                    addedNewLinesAritleContent += "<p>";
+                    addedNewLinesAritleContent += str;
+                    addedNewLinesAritleContent +="</p>";
+                }
 
                 timestamp = executeQuery.getString("post_timestamp");
                 InputStream binaryStream = executeQuery.getBinaryStream("image");
                 key = executeQuery.getString("key");
                 hashdata.put(numberOfRow, aritleTitle);
                 innerMap.put("title", aritleTitle);
-                innerMap.put("content", aritleContent);
+                innerMap.put("content", addedNewLinesAritleContent);
                 innerMap.put("timestamp", timestamp);
 
                 InputStream inputStream1 = binaryStream;
