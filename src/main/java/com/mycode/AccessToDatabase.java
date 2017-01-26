@@ -24,10 +24,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -89,13 +91,13 @@ public class AccessToDatabase {
                 JspWriter writer = null;
                 // 改行コードを全てLFに変換し、LFでsplit
                 //リプレイスしたら全て\nになるからその条件でsplitする。
-                
+
                 //改行処理追加
                 String addedNewLinesAritleContent = "";
-                for (String str  : aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n")) {
+                for (String str : aritleContent.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n")) {
                     addedNewLinesAritleContent += "<p>";
                     addedNewLinesAritleContent += str;
-                    addedNewLinesAritleContent +="</p>";
+                    addedNewLinesAritleContent += "</p>";
                 }
 
                 timestamp = executeQuery.getString("post_timestamp");
@@ -120,7 +122,7 @@ public class AccessToDatabase {
                     byte[] toByteArray = buffer.toByteArray();
 
                     imageBase64 = new String(Base64.getEncoder().encode(toByteArray));
-                    if(imageBase64.isEmpty()){//if 0byte then 
+                    if (imageBase64.isEmpty()) {//if 0byte then 
                         imageBase64 = null;
                     }
                 } else {
@@ -136,21 +138,16 @@ public class AccessToDatabase {
 
     }
 
-    public void postDataToDatabase(HttpServletRequest request) throws SQLException, FileNotFoundException, IOException, ServletException {
+    public void postDataToDatabase(HttpServletRequest request) throws SQLException, FileNotFoundException, IOException, ServletException, ParseException {
         // 1) create a java calendar instance
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone( "UTC" ));
-        TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");//timezone setting 
-        //calendar.setTimeZone(tz);//timezone
-        //int get = calendar.get(numberOfRow);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
         // 2) get a java.util.Date from the calendar instance.
-        //    this date will represent the current instant, or "now".
-        //TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         java.util.Date now = calendar.getTime();
         // 3) a java current time (now) instance
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());//finish
         //chage to String
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        simpleDateFormat.setTimeZone(tz);
+        //simpleDateFormat.setTimeZone(tzTest);//タイムゾーンの設定いらない?
         String timestamp = simpleDateFormat.format(currentTimestamp);
         Part part = request.getPart("image");//image update
         InputStream inputStream = part.getInputStream();
@@ -171,7 +168,7 @@ public class AccessToDatabase {
         try (PreparedStatement statement = con.prepareStatement(sql)) {
             statement.setString(1, request.getParameter("title"));
             statement.setString(2, request.getParameter("text"));
-            statement.setTimestamp(3, currentTimestamp);
+            statement.setTimestamp(3, currentTimestamp, calendar);
             statement.setBytes(4, toByteArray);
 
             int row = statement.executeUpdate();
