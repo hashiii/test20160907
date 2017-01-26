@@ -6,11 +6,13 @@ package com.mycode;
  * and open the template in the editor.
  */
 import com.google.common.io.ByteStreams;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,7 +107,7 @@ public class NotebookServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileNotFoundException {
         try {
             AccessToDatabase atd = new AccessToDatabase();
         } catch (SQLException ex) {
@@ -128,6 +130,8 @@ public class NotebookServlet extends HttpServlet {
         } catch (URISyntaxException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JspException ex) {
+            Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
