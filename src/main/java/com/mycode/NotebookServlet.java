@@ -82,7 +82,7 @@ public class NotebookServlet extends HttpServlet {
         String keyNum = request.getParameter("keyNum");
         if (!keyNum.isEmpty()) {
             try {
-                AccessToDatabase atd = new AccessToDatabase();
+                AccessToDatabase atd = new AccessToDatabase(0);
                 atd.deleteDatatoDatabase(keyNum);
             } catch (SQLException ex) {
                 Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +109,7 @@ public class NotebookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileNotFoundException {
         try {
-            AccessToDatabase atd = new AccessToDatabase();
+            AccessToDatabase atd = new AccessToDatabase(34);
         } catch (SQLException ex) {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -120,7 +120,7 @@ public class NotebookServlet extends HttpServlet {
             Logger.getLogger(NotebookServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {//dbaccess
-            AccessToDatabase atc = new AccessToDatabase();
+            AccessToDatabase atc = new AccessToDatabase(5);
 
             atc.postDataToDatabase(request);
         } catch (SQLException ex) {

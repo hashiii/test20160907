@@ -23,19 +23,19 @@ public class Article {
     }
 
     public int getNumberOfAllAricleCounts() throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
-        AccessToDatabase atc = new AccessToDatabase();
+        AccessToDatabase atc = new AccessToDatabase(0);
         return atc.getDataFromDatabase();
     }
 
-    public Map getArticleContents() throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
+    public Map getArticleContents(int pageNum) throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
 
-        AccessToDatabase atc = new AccessToDatabase();
+        AccessToDatabase atc = new AccessToDatabase(pageNum);
         Map eachArticleDatas = atc.getContents();
         return eachArticleDatas;
     }
 
     public void delete(String keynumber) throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
-        AccessToDatabase db = new AccessToDatabase();
+        AccessToDatabase db = new AccessToDatabase(0);
         db.deleteDatatoDatabase(keynumber);
     }
 }

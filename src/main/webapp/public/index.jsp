@@ -7,7 +7,13 @@
 <%
 Article artest = new Article();
 int numberOfAllArticleCount = artest.getNumberOfAllAricleCounts();
-Map contents = artest.getArticleContents();
+String pageStr = request.getParameter("page");
+if(pageStr == null){
+    pageStr = "1";
+}
+int pageNum = Integer.parseInt(pageStr);
+
+Map contents = artest.getArticleContents(pageNum);
 %>
 
 

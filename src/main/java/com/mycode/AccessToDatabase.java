@@ -70,7 +70,7 @@ public class AccessToDatabase {
     String imageBase64;
     private String value;
 
-    public AccessToDatabase() throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
+    public AccessToDatabase(int pageNumber) throws SQLException, ClassNotFoundException, URISyntaxException, IOException, JspException {
         // ドライバクラスをロード 
         Class.forName("org.postgresql.Driver"); // PostgreSQLの場合 
         //Connection con = DriverManager.getConnection(url, user, password);//localの場合
@@ -78,7 +78,19 @@ public class AccessToDatabase {
         hashdata = new LinkedHashMap();
 
         try (java.sql.Statement stmt = con.createStatement()) {
-            String sql = "select * FROM notebook_posts where status = 'active' ORDER BY post_timestamp DESC ;";
+            String sql = "select * FROM notebook_posts where status = 'active' ORDER BY post_timestamp DESC ";
+            
+            //ページネーション処理
+            if(pageNumber != 0){
+                sql += "limit " + 20;
+                if(pageNumber != 1){
+                    pageNumber = 20 * pageNumber; 
+                    sql += " offset " + pageNumber;   
+                }
+            }
+            sql += " ;";
+            //ページ完了
+            
             // テーブル照会実行
             executeQuery = stmt.executeQuery(sql);
             while (executeQuery.next()) {
