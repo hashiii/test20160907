@@ -80,6 +80,12 @@ Map contents = artest.getArticleContents(pageNum);
             function change_page(){
                 window.location.href = 'post.jsp';
             }
+            function next_page(pageNum){
+                var pageNumNum = Number(pageNum);
+                pageNumNum + 1;
+                alert(pageNumNum);
+                window.location.href = "?page = 2";
+            }
 
         </script>
         <div class="row">
@@ -124,14 +130,16 @@ Map contents = artest.getArticleContents(pageNum);
 
                     </section>
                 </section>
-
+            <div id="paginate">
+                <button type="button" class="btn btn-primary" onclick="next_page(<%= pageNum %>);">次のページ</button>
+            </div>
             </div>
             <div class="col-md-4">
                 <h2>category</h2>
             </div>
         </div>
-
     </div>
+    
 </body>
 
 </html>
